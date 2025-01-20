@@ -1,3 +1,4 @@
+# Licensed under the MIT license.
 """
 A minimal implementation of Monte Carlo tree search (MCTS) in Python 3
 Luke Harold Miles, July 2019, Public Domain Dedication

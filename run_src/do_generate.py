@@ -1,5 +1,5 @@
+# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
-
 import sys
 import os, json, time
 from tqdm import tqdm

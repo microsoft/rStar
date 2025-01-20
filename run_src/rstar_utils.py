@@ -1,5 +1,5 @@
+# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
-
 from enum import Enum, unique
 import re
 import math

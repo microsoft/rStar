@@ -2,7 +2,6 @@
 # Xwin-Math
 # Copyright (c) 2023 Xwin-Math Team
 # Licensed under The MIT License [see LICENSE for details]
-# Based on ToRA (https://github.com/microsoft/ToRA/blob/main/src/eval/grader.py)
 # Modified by Weiqi Wang
 # ---------------------------------------------------------
 

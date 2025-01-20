@@ -1,3 +1,9 @@
+# ---------------------------------------------------------
+# Xwin-Math
+# Copyright (c) 2023 Xwin-Math Team
+# Licensed under The MIT License [see LICENSE for details]
+# Written by Weiqi Wang
+# ---------------------------------------------------------
 import pprint
 
 
