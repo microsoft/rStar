@@ -257,6 +257,13 @@ accelerate launch --num_processes=8 train/train_RM.py \
 
 ```
 
+**Convert to RM Format**
+
+Run the command below to convert the RM format.
+
+```bash
+python train/save_rm.py --sft_model_path "sft_model_path" --rm_ckpt_path "rm_ckpt_path" --rm_save_path "rm_save_path"
+```
 
 ---
 
