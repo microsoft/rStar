@@ -3,7 +3,7 @@ omegaconf==2.4.0.dev2
 termcolor
 jsonlines
 pebble
-vllm==0.6.6.post1 # >=0.6.6.post1
+vllm==0.8.0 # >=0.6.6.post1
 matplotlib
 pyparsing
 scipy
