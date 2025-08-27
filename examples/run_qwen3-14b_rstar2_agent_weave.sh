@@ -3,12 +3,13 @@ set -x
 ulimit -n 65535
 
 SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") &>/dev/null && pwd -P)
-CONFIG_PATH="$SCRIPT_DIR/config"
+PROJECT_DIR=$SCRIPT_DIR/..
+CONFIG_PATH="$PROJECT_DIR/rstar2_agent/config"
 PROJECT_NAME="rstar2-agent"
-EXPERIMENT_NAME="qwen3-14b-sgl-tool-agent-verify-n16"
+EXPERIMENT_NAME="qwen3-14b-sgl-tool-agent-verify-n32"
 MODEL_PATH="$HOME/models/Qwen3-14B-Base"
 
-python3 -m recipe.rstar2_agent.main_rstar2_agent \
+python3 -m rstar2_agent.main_rstar2_agent \
     --config-path="$CONFIG_PATH" \
     --config-name='rstar2_agent_trainer' \
     algorithm.adv_estimator=grpo \
@@ -64,5 +65,5 @@ python3 -m recipe.rstar2_agent.main_rstar2_agent \
     trainer.total_training_steps=200 \
     data.train_files="['$HOME/data/rstar2-agent/dapo-math-17k-en/train.parquet']" \
     data.val_files="['$HOME/data/rstar2-agent/aime2024/test.parquet']" \
-    actor_rollout_ref.rollout.multi_turn.tool_config_path="$SCRIPT_DIR/config/tool_config/python_tool_config.yaml" \
+    actor_rollout_ref.rollout.multi_turn.tool_config_path="$PROJECT_DIR/rstar2_agent/config/tool_config/python_tool_config.yaml" \
     trainer.total_epochs=15 $@ 2>&1 | tee $PROJECT_NAME-$EXPERIMENT_NAME.log

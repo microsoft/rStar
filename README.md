@@ -155,7 +155,7 @@ huggingface-cli download Qwen/Qwen3-14B-Base --local-dir $HOME/models/Qwen3-14B-
 Run the training script (for 8x A100/H100 GPUs):
 
 ```bash
-bash rstar2_agent/run_qwen3-14b_rstar2_agent_weave.sh
+bash examples/run_qwen3-14b_rstar2_agent_weave.sh
 ```
 
 > Adjust configuration parameters based on your hardware environment.

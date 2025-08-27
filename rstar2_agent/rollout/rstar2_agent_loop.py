@@ -19,7 +19,7 @@ import os
 from typing import Any
 from uuid import uuid4
 
-from verl.experimental.agent_loop.agent_loop import AgentLoopOutput, register, RStar2AgentAsyncLLMServerManager
+from verl.experimental.agent_loop.agent_loop import AgentLoopOutput, register
 from verl.experimental.agent_loop.tool_agent_loop import ToolAgentLoop
 from verl.experimental.agent_loop.tool_parser import FunctionCall
 from verl.tools.schemas import ToolResponse

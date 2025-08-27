@@ -1,3 +1,0 @@
-weave
-sympy
-scipy
