@@ -72,7 +72,7 @@ pip install -r code-judge/requirements.txt
 pip install -e code-judge
 
 # Install rStar2-Agent requirements
-pip install -r rstar2-agent/requirements.txt
+pip install -r rstar2_agent/requirements.txt
 ```
 
 #### Option 2: Automated Installation
