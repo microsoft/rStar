@@ -138,7 +138,26 @@ class RStar2AgentRayTrainer(RayPPOTrainer):
                     [str(uuid.uuid4()) for _ in range(len(batch.batch))], dtype=object
                 )
 
-                gen_batch = self._get_gen_batch(batch)
+                # pop those keys for generation
+                batch_keys_to_pop = ["input_ids", "attention_mask", "position_ids"]
+                non_tensor_batch_keys_to_pop = ["raw_prompt_ids"]
+                if "multi_modal_data" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("multi_modal_data")
+                if "raw_prompt" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("raw_prompt")
+                if "tools_kwargs" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("tools_kwargs")
+                if "interaction_kwargs" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("interaction_kwargs")
+                if "index" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("index")
+                if "agent_name" in batch.non_tensor_batch:
+                    non_tensor_batch_keys_to_pop.append("agent_name")
+
+                gen_batch = batch.pop(
+                    batch_keys=batch_keys_to_pop,
+                    non_tensor_batch_keys=non_tensor_batch_keys_to_pop,
+                )
 
                 # pass global_steps to trace
                 gen_batch.meta_info["global_steps"] = self.global_steps
@@ -341,37 +360,39 @@ class RStar2AgentRayTrainer(RayPPOTrainer):
                                 dump_path=rollout_data_dir,
                             )
 
-                # validate
-                if (
-                    self.val_reward_fn is not None
-                    and self.config.trainer.test_freq > 0
-                    and (is_last_step or self.global_steps % self.config.trainer.test_freq == 0)
-                ):
-                    with marked_timer("testing", timing_raw, color="green"):
-                        val_metrics: dict = self._validate()
-                        if is_last_step:
-                            last_val_metrics = val_metrics
-                    metrics.update(val_metrics)
+                    # validate
+                    if (
+                        self.val_reward_fn is not None
+                        and self.config.trainer.test_freq > 0
+                        and (is_last_step or self.global_steps % self.config.trainer.test_freq == 0)
+                    ):
+                        with marked_timer("testing", timing_raw, color="green"):
+                            val_metrics: dict = self._validate()
+                            if is_last_step:
+                                last_val_metrics = val_metrics
+                        metrics.update(val_metrics)
 
-                # Check if the ESI (Elastic Server Instance)/training plan is close to expiration.
-                esi_close_to_expiration = should_save_ckpt_esi(
-                    max_steps_duration=self.max_steps_duration,
-                    redundant_time=self.config.trainer.esi_redundant_time,
-                )
-                # Check if the conditions for saving a checkpoint are met.
-                # The conditions include a mandatory condition (1) and
-                # one of the following optional conditions (2/3/4):
-                # 1. The save frequency is set to a positive value.
-                # 2. It's the last training step.
-                # 3. The current step number is a multiple of the save frequency.
-                # 4. The ESI(Elastic Server Instance)/training plan is close to expiration.
-                if self.config.trainer.save_freq > 0 and (
-                    is_last_step or self.global_steps % self.config.trainer.save_freq == 0 or esi_close_to_expiration
-                ):
-                    if esi_close_to_expiration:
-                        print("Force saving checkpoint: ESI instance expiration approaching.")
-                    with marked_timer("save_checkpoint", timing_raw, color="green"):
-                        self._save_checkpoint()
+                    # Check if the ESI (Elastic Server Instance)/training plan is close to expiration.
+                    esi_close_to_expiration = should_save_ckpt_esi(
+                        max_steps_duration=self.max_steps_duration,
+                        redundant_time=self.config.trainer.esi_redundant_time,
+                    )
+                    # Check if the conditions for saving a checkpoint are met.
+                    # The conditions include a mandatory condition (1) and
+                    # one of the following optional conditions (2/3/4):
+                    # 1. The save frequency is set to a positive value.
+                    # 2. It's the last training step.
+                    # 3. The current step number is a multiple of the save frequency.
+                    # 4. The ESI(Elastic Server Instance)/training plan is close to expiration.
+                    if self.config.trainer.save_freq > 0 and (
+                        is_last_step
+                        or self.global_steps % self.config.trainer.save_freq == 0
+                        or esi_close_to_expiration
+                    ):
+                        if esi_close_to_expiration:
+                            print("Force saving checkpoint: ESI instance expiration approaching.")
+                        with marked_timer("save_checkpoint", timing_raw, color="green"):
+                            self._save_checkpoint()
 
                 with marked_timer("stop_profile", timing_raw):
                     next_step_profile = (
@@ -413,14 +434,6 @@ class RStar2AgentRayTrainer(RayPPOTrainer):
 
                 progress_bar.update(1)
                 self.global_steps += 1
-
-                if (
-                    hasattr(self.config.actor_rollout_ref.actor, "profiler")
-                    and self.config.actor_rollout_ref.actor.profiler.tool == "torch_memory"
-                ):
-                    self.actor_rollout_wg.dump_memory_snapshot(
-                        tag=f"post_update_step{self.global_steps}", sub_dir=f"step{self.global_steps}"
-                    )
 
                 if is_last_step:
                     pprint(f"Final validation metrics: {last_val_metrics}")

@@ -12,8 +12,6 @@ from omegaconf import OmegaConf
 from verl.trainer.constants_ppo import get_ppo_ray_runtime_env
 from verl.trainer.main_ppo import create_rl_dataset, create_rl_sampler
 from verl.trainer.ppo.reward import load_reward_manager
-from verl.trainer.ppo.utils import need_critic, need_reference_policy
-from verl.utils.config import validate_config
 from verl.utils.device import is_cuda_available
 
 from .rstar2_agent_ray_trainer import RStar2AgentRayTrainer
@@ -44,13 +42,10 @@ def run_ppo(config) -> None:
         # Set environment variables in the runtime environment to control tokenizer parallelism,
         # NCCL debug level, VLLM logging level, and allow runtime LoRA updating
         # `num_cpus` specifies the number of CPU cores Ray can use, obtained from the configuration
-        default_runtime_env = get_ppo_ray_runtime_env()
-        ray_init_kwargs = config.ray_kwargs.get("ray_init", {})
-        runtime_env_kwargs = ray_init_kwargs.get("runtime_env", {})
-        runtime_env = OmegaConf.merge(default_runtime_env, runtime_env_kwargs)
-        ray_init_kwargs = OmegaConf.create({**ray_init_kwargs, "runtime_env": runtime_env})
-        print(f"ray init kwargs: {ray_init_kwargs}")
-        ray.init(**OmegaConf.to_container(ray_init_kwargs))
+        ray.init(
+            runtime_env=get_ppo_ray_runtime_env(),
+            num_cpus=config.ray_init.num_cpus,
+        )
 
     # Create a remote instance of the TaskRunner class, and
     # Execute the `run` method of the TaskRunner instance remotely and wait for it to complete
@@ -208,27 +203,6 @@ class TaskRunner:
         pprint(OmegaConf.to_container(config, resolve=True))
         OmegaConf.resolve(config)
 
-        actor_rollout_cls, ray_worker_group_cls = self.add_actor_rollout_worker(config)
-        self.add_critic_worker(config)
-
-        # We should adopt a multi-source reward function here:
-        # - for rule-based rm, we directly call a reward score
-        # - for model-based rm, we call a model
-        # - for code related prompt, we send to a sandbox if there are test cases
-        # finally, we combine all the rewards together
-        # The reward type depends on the tag of the data
-        self.add_reward_model_worker(config)
-
-        # Add a reference policy worker if KL loss or KL reward is used.
-        self.add_ref_policy_worker(config, actor_rollout_cls)
-
-        # validate config
-        validate_config(
-            config=config,
-            use_reference_policy=need_reference_policy(self.role_worker_mapping),
-            use_critic=need_critic(config),
-        )
-
         # Download the checkpoint from HDFS to the local machine.
         # `use_shm` determines whether to use shared memory, which could lead to faster model loading if turned on
         local_path = copy_to_local(
@@ -242,6 +216,20 @@ class TaskRunner:
         tokenizer = hf_tokenizer(local_path, trust_remote_code=trust_remote_code)
         # Used for multimodal LLM, could be None
         processor = hf_processor(local_path, trust_remote_code=trust_remote_code, use_fast=True)
+
+        actor_rollout_cls, ray_worker_group_cls = self.add_actor_rollout_worker(config)
+        self.add_critic_worker(config)
+
+        # We should adopt a multi-source reward function here:
+        # - for rule-based rm, we directly call a reward score
+        # - for model-based rm, we call a model
+        # - for code related prompt, we send to a sandbox if there are test cases
+        # finally, we combine all the rewards together
+        # The reward type depends on the tag of the data
+        self.add_reward_model_worker(config)
+
+        # Add a reference policy worker if KL loss or KL reward is used.
+        self.add_ref_policy_worker(config, actor_rollout_cls)
 
         ################################### rStar ###################################
         # support data.filter_overlong_prompts
