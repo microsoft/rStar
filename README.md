@@ -63,16 +63,17 @@ A comprehensive reinforcement learning training framework for the rStar2-Agent, 
 git submodule init
 git submodule update
 
-# Install Verl dependencies
+# install verl
+pip install "torch<2.8"
 pip install -r verl/requirements_sglang.txt
 pip install -e verl
 
-# Install Code Judge dependencies
+# install code judge
 pip install -r code-judge/requirements.txt
 pip install -e code-judge
 
-# Install rStar2-Agent requirements
-pip install -r rstar2_agent/requirements.txt
+# install rstar2_agent
+pip install -e .
 ```
 
 #### Option 2: Automated Installation

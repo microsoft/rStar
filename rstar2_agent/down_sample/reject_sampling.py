@@ -24,10 +24,10 @@ def reject_equal_reward(batch: DataProto, do_sample=True, world_size=None):
             valid_mask[uid_mask] = False
             solve_equal += 1
 
-        if torch.allclose(torch.zeros_like(uid_rewards), uid_rewards):
-            solve_equal_zeros += 1
-        else:
-            solve_equal_non_all_zeros += 1
+            if torch.allclose(torch.zeros_like(uid_rewards), uid_rewards):
+                solve_equal_zeros += 1
+            else:
+                solve_equal_non_all_zeros += 1
 
     metrics = {}
     metrics['reject_equal_reward/solve_non_equal_total'] = len(unique_uids) - solve_equal
