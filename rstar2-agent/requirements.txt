@@ -1,0 +1,3 @@
+weave
+sympy
+scipy

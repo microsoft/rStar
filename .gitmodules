@@ -1,0 +1,6 @@
+[submodule "code-judge"]
+	path = code-judge
+	url = https://github.com/0xWJ/code-judge.git
+[submodule "verl"]
+	path = verl
+	url = https://github.com/J-shang/verl.git
