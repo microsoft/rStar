@@ -161,9 +161,14 @@ Please view [Installation](#Installation) and [Code Judge Server Setup](#Code-Ju
 
 ### Run Evaluation Script
 
+We evaluate following mathematical reasoning benchmarks:
+
+- **AIME 2024/2025 (American Invitational Mathematics Examination)**: High-school level competition mathematics
+- **MATH500**: A subset of the MATH dataset containing 500 challenging problems
+
 ```bash
-bash examples/eval_aime.sh
-bash eval_math500.sh
+MODEL_PATH=/path/to/your/model bash examples/aime_eval.sh
+MODEL_PATH=/path/to/your/model bash examples/math500_eval.sh
 ```
 
 ## rStar2-Agent RL Training
