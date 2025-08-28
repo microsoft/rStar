@@ -7,37 +7,36 @@ rStar2-Agent
 📃 <a href="https://huggingface.co/papers/2501.04519" target="_blank">[Paper]</a> 
 </p>
 
-Repo for "[]()".
+Repo for "[rStar2-Agent: Agentic Reasoning Technical Report]()".
 
-Authors:
+Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, Xinyu Guan, Buze Zhang, Bingcheng Dong, Xudong Zhou, Bowen Zhang, Ying Xin, Ziming Miao, Fan Yang, Mao Yang
 
 <p align="center">
-    <img src="images/main_table.png" width="1000">
+    <img src="images/figure-1.png" width="1000">
         <br>
-    <em>Table 1: </em>
+    <em>Figure 1: rStar2-Agent-14B reaches frontier-level math reasoning in just 510 RL training step</em>
 </p>
 
 ## News 
 
 - **[07/15/2025]** Our rStar-Coder [paper](https://arxiv.org/abs/2505.21297) and [dataset](https://huggingface.co/datasets/microsoft/rStar-Coder) are released. We introduce a large-scale, verified dataset of 418K competition-level code problems with **test cases** of varying difficulty, enabling small LLMs (1.5B-14B) to achieve frontier-level code reasoning performance.
 - **[02/10/2025]** We are hiring interns! If you are interested in improving LLM reasoning, please send your CV to lzhani@microsoft.com.
-- **[01/21/2025]** Our code has been open-sourced. 
-- **[01/09/2025]** Our paper is released: https://huggingface.co/papers/2501.04519.
+- **[01/21/2025]** rStar-Math code has been open-sourced. 
+- **[01/09/2025]** rStar-Math paper is released: https://huggingface.co/papers/2501.04519.
 
 Note: Our prior work [Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers](https://huggingface.co/papers/2408.06195) is open-sourced on the `rStar-mutualreasoning` branch.
+
+Note: Our prior work [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](https://huggingface.co/papers/2501.04519) is open-sourced on the [rStar-math]() branch.
 
 ## Contents
 - [Introduction](#Introduction)
 - [Try rStar2-Agent with Tool Calling](#Try-rStar2-Agent-with-Tool-Calling)
+- [Evaluation](#Evaluation)
 - [rStar2-Agent RL Training](#rStar2-Agent-RL-Training)
 - [Citation](#Citation)
 
 ## Introduction
 We introduce rStar2-Agent, a 14B math reasoning model that thinks smarter rather than merely longer, achieving performance comparable to 671B DeepSeek-R1 through pure agentic reinforcement learning. The model plans, reasons, and autonomously uses coding tools to efficiently explore, verify, and reflect for more complex problem-solving. This capability relies on three key innovations: (i) GRPO-RoC, an effective agentic reinforcement learning algorithm with a novel Resample-on-Correct rollout strategy that optimizes coding tool usage and enables shorter, smarter reasoning by selectively retaining higher-quality positive trajectories while preserving all failure cases; (ii) a scalable and efficient RL infrastructure that supports high-throughput tool call execution and mitigates the high costs of agentic RL rollout, enabling efficient training on limited GPU resources (64 MI300X GPUs); (iii) an agent training recipe that starts with non-reasoning SFT and proceeds through multi-stage RL with concise maximum response lengths per stage and increasing dataset difficulty. To this end, rStar2-Agent boosts a pre-trained 14B model to state-of-the-art levels in only 510 RL steps within one week, achieving 80.6% and 69.8% average pass@1 on AIME24 and AIME25, surpassing DeepSeek-R1 (671B) with shorter responses. Beyond mathematics, rStar2-Agent-14B also demonstrates strong generalization to alignment, scientific reasoning, and agentic tool-use tasks.
-
-<p align="center">
-  <img src="images/rstar.png">
-</p>
 
 ## Try rStar2-Agent with Tool Calling
 
