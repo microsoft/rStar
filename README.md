@@ -1,21 +1,20 @@
 <h1 align="center">
 <br>
-rStar-Math
+rStar2-Agent
 </h1>
 
 <p align="center">
 📃 <a href="https://huggingface.co/papers/2501.04519" target="_blank">[Paper]</a> 
 </p>
 
-Repo for "[rStar-Math: Small LLMs Can Master Math Reasoning
-with Self-Evolved Deep Thinking](https://huggingface.co/papers/2501.04519)".
+Repo for "[]()".
 
-Authors: [Xinyu Guan](https://gxy-2001.github.io/)\*, [Li Lyna Zhang](https://www.microsoft.com/en-us/research/people/lzhani/)\*, Yifei Liu, Ning Shang, Youran Sun, Yi Zhu, Fan Yang, Mao Yang
+Authors:
 
 <p align="center">
     <img src="images/main_table.png" width="1000">
         <br>
-    <em>Table 1: rStar-Math enables frontier math reasoning in SLMs via deep thinking over 64 trajectories.</em>
+    <em>Table 1: </em>
 </p>
 
 ## News 
@@ -25,34 +24,16 @@ Authors: [Xinyu Guan](https://gxy-2001.github.io/)\*, [Li Lyna Zhang](https://ww
 - **[01/21/2025]** Our code has been open-sourced. 
 - **[01/09/2025]** Our paper is released: https://huggingface.co/papers/2501.04519.
 
-
 Note: Our prior work [Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers](https://huggingface.co/papers/2408.06195) is open-sourced on the `rStar-mutualreasoning` branch.
 
-
-
-## Contents
-- [Introduction](#Introduction)
-- [rStar2-Agent-RL-Training](#rStar2-Agent-RL-Training)
-- [Citation](#Citation)
-
-
 ## Introduction
-We present rStar-Math to demonstrate that small language models (SLMs) can rival or even surpass the math reasoning capability of OpenAI o1-mini, without distillation from superior models. rStar-Math achieves this by exercising "deep thinking" through Monte Carlo Tree Search (MCTS), where a math policy SLM performs test-time search guided by an SLM-based process reward model. The diagram below presents an overview of the rStar-Math framework, highlighting its core components and processes.
+We introduce rStar2-Agent, a 14B math reasoning model that thinks smarter rather than merely longer, achieving performance comparable to 671B DeepSeek-R1 through pure agentic reinforcement learning. The model plans, reasons, and autonomously uses coding tools to efficiently explore, verify, and reflect for more complex problem-solving. This capability relies on three key innovations: (i) GRPO-RoC, an effective agentic reinforcement learning algorithm with a novel Resample-on-Correct rollout strategy that optimizes coding tool usage and enables shorter, smarter reasoning by selectively retaining higher-quality positive trajectories while preserving all failure cases; (ii) a scalable and efficient RL infrastructure that supports high-throughput tool call execution and mitigates the high costs of agentic RL rollout, enabling efficient training on limited GPU resources (64 MI300X GPUs); (iii) an agent training recipe that starts with non-reasoning SFT and proceeds through multi-stage RL with concise maximum response lengths per stage and increasing dataset difficulty. To this end, rStar2-Agent boosts a pre-trained 14B model to state-of-the-art levels in only 510 RL steps within one week, achieving 80.6% and 69.8% average pass@1 on AIME24 and AIME25, surpassing DeepSeek-R1 (671B) with shorter responses. Beyond mathematics, rStar2-Agent-14B also demonstrates strong generalization to alignment, scientific reasoning, and agentic tool-use tasks.
 
 <p align="center">
   <img src="images/rstar.png">
 </p>
 
-## rStar2-Agent-RL-Training
-
-A comprehensive reinforcement learning training framework for the rStar2-Agent, built on [Verl](https://github.com/volcengine/verl) and [Code Judge](https://github.com/0xWJ/code-judge). This framework enables training models after instruction-following supervised fine-tuning (SFT).
-
-### Prerequisites
-
-- Python 3.12
-- Redis server
-- GPU environment (8x A100/H100 recommended)
-- Docker (recommended for isolated execution)
+## Try rStar2-Agent with Tool Calling
 
 ### Installation
 
@@ -124,6 +105,55 @@ tmux new-session -d -s worker \
    python run_workers.py \
    2>&1 | tee worker.log'
 ```
+
+### Launch the VLLM Server
+
+First, start the VLLM server:
+
+```bash
+vllm serve /path/to/your/model \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --enable-auto-tool-choice \
+    --tool-call-parser hermes
+```
+
+Replace `/path/to/your/model` with the actual path to your downloaded model.
+
+### Verify Server Status
+
+Check if the server is running properly:
+
+```bash
+curl http://localhost:8000/v1/models
+```
+
+### Run Interactive Chat with Tool Calling
+
+Use the provided script to interact with your model:
+
+```bash
+python examples/chat_with_tool_call.py \
+    --model /path/to/your/model \
+    --prompt "Solve the system of equations: 2x + 3y = 7, x - y = 1" \
+    --max_tokens 8192
+```
+
+### Script Options
+
+The `examples/chat_with_tool_call.py` script supports the following arguments:
+
+- `--model`: Path to your model
+- `--prompt`: Input prompt for the model
+- `--max_tokens`: Maximum number of tokens to generate
+
+## rStar2-Agent-RL-Training
+
+A comprehensive reinforcement learning training framework for the rStar2-Agent, built on [Verl](https://github.com/volcengine/verl) and [Code Judge](https://github.com/0xWJ/code-judge). This framework enables training models after instruction-following supervised fine-tuning (SFT).
+
+### Environment Setup
+
+Please view [Installation](#Installation) and [Code Judge Server Setup](#Code-Judge-Server-Setup).
 
 ### Data Preparation
 
