@@ -17,7 +17,7 @@ from verl.workers.reward_manager.abstract import AbstractRewardManager
 from rstar2_agent.tools.code_judge_utils import run_tool_calls_on_server_async
 
 verify_math_prefix = """
-from rstar2_agent.reward.compute_score import compute_score
+from fused_compute_score import compute_score
 import base64
 solution_str = base64.b64decode("{}".encode()).decode()
 ground_truth = base64.b64decode("{}".encode()).decode()
@@ -54,8 +54,8 @@ class CodeJudgeRewardManager(AbstractRewardManager):
         reward_tensor = torch.zeros_like(data.batch["responses"], dtype=torch.float32)
         reward_extra_info = defaultdict(list)
 
-        for i in range(0, len(data), step=64):
-            batch_data = DataProto.cat(data[i : i + 64])
+        for i in range(0, len(data), 64):
+            batch_data = data[i : i + 64]
             tool_calls = []
             for j in range(len(batch_data)):
                 data_item = batch_data[j]  # DataProtoItem

@@ -153,6 +153,19 @@ The `examples/chat_with_tool_call.py` script supports the following arguments:
 - `--prompt`: Input prompt for the model
 - `--max_tokens`: Maximum number of tokens to generate
 
+## Evaluation
+
+### Environment Setup
+
+Please view [Installation](#Installation) and [Code Judge Server Setup](#Code-Judge-Server-Setup).
+
+### Run Evaluation Script
+
+```bash
+bash examples/eval_aime.sh
+bash eval_math500.sh
+```
+
 ## rStar2-Agent RL Training
 
 A comprehensive reinforcement learning training framework for the rStar2-Agent, built on [Verl](https://github.com/volcengine/verl) and [Code Judge](https://github.com/0xWJ/code-judge). This framework enables training models after instruction-following supervised fine-tuning (SFT).
@@ -222,7 +235,7 @@ augmentation.down_sampling_config.min_non_zero_reward_trace_num=2    # Minimum p
 
 rStar2-Agent was originally training based on VERL v0.2 with our custom multi-turn tool calling training framework. The current training framework released here has been migrated to VERL v0.5 to ensure compatibility with the latest community standards. While this release framework hasn't been used to train a complete model yet, we have verified that the first 50 training steps show minimal differences between our original and migrated frameworks, maintaining the core functionality of our proven training approach.
 
-Although our original framework includes additional advanced features such as request load balance scheduler, parallel server-side rollout scoring, and enhanced scoring functions for better answer extraction, we chose to migrate to the latest VERL version to maintain community compatibility and facilitate easier customization by users. This approach ensures you can benefit from ongoing VERL improvements and easily integrate with the latest open-source developments. We also consider migrating all features to the current version in the future.
+Although our original framework includes additional advanced features such as rollout request load balance scheduler, we chose to migrate to the latest VERL version to maintain community compatibility and facilitate easier customization by users. This approach ensures you can benefit from ongoing VERL improvements and easily integrate with the latest open-source developments. We also consider migrating all features to the current version in the future.
 
 If you encounter any issues during usage or need assistance with the training framework, please contact us.
 

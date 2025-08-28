@@ -14,4 +14,4 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["rstar2_agent"]
+packages = ["rstar2_agent", "fused_compute_score"]
