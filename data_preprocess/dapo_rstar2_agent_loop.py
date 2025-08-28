@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 """
 Preprocess the DAPO-Math-17k dataset to parquet format
 """

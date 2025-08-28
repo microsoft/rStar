@@ -1,11 +1,13 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 import asyncio
 import time
-import random
 import uuid
 import collections
 import aiohttp
 import traceback
-from typing import List, Dict, Any, Literal, Callable, Awaitable, Optional
+from typing import List, Dict, Any, Callable, Awaitable
 
 # Define the expected signature for the batch submission function
 # It should be an async callable that takes:

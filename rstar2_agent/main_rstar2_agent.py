@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 """
 The different of this file and the verl/trainer/main_ppo.py is the usage of RStar2AgentRayTrainer instead of RayPPOTrainer.
 """

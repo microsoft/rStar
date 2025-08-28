@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 set -x
 
 ulimit -n 65535
@@ -53,7 +56,7 @@ python3 -m rstar2_agent.main_rstar2_agent \
     augmentation.down_sampling_config.min_zero_reward_trace_num=2 \
     augmentation.down_sampling_config.min_non_zero_reward_trace_num=2 \
     augmentation.down_sampling_config.down_sample_to_n=16 \
-    reward_model.reward_manager=prime \
+    reward_model.reward_manager=code_judge \
     trainer.critic_warmup=0 \
     trainer.logger='["console", "wandb"]' \
     trainer.project_name=$PROJECT_NAME \

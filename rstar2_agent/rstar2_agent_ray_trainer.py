@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 import uuid
 from copy import deepcopy
 from pprint import pprint
@@ -72,6 +75,8 @@ class RStar2AgentRayTrainer(RayPPOTrainer):
         The driver process only need to call the compute functions of the worker group through RPC
         to construct the PPO dataflow.
         The light-weight advantage computation is done on the driver process.
+
+        Most logic is same with RayPPOTrainer, mainly add down sample related.
         """
         from omegaconf import OmegaConf
 

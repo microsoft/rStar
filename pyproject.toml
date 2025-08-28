@@ -9,7 +9,8 @@ description = "rstar2-agent core training recipe"
 dependencies = [
     "weave",
     "sympy",
-    "scipy"
+    "scipy",
+    "math-verify"
 ]
 
 [tool.setuptools]
