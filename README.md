@@ -26,6 +26,12 @@ Authors:
 
 Note: Our prior work [Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers](https://huggingface.co/papers/2408.06195) is open-sourced on the `rStar-mutualreasoning` branch.
 
+## Contents
+- [Introduction](#Introduction)
+- [Try rStar2-Agent with Tool Calling](#Try-rStar2-Agent-with-Tool-Calling)
+- [rStar2-Agent RL Training](#rStar2-Agent-RL-Training)
+- [Citation](#Citation)
+
 ## Introduction
 We introduce rStar2-Agent, a 14B math reasoning model that thinks smarter rather than merely longer, achieving performance comparable to 671B DeepSeek-R1 through pure agentic reinforcement learning. The model plans, reasons, and autonomously uses coding tools to efficiently explore, verify, and reflect for more complex problem-solving. This capability relies on three key innovations: (i) GRPO-RoC, an effective agentic reinforcement learning algorithm with a novel Resample-on-Correct rollout strategy that optimizes coding tool usage and enables shorter, smarter reasoning by selectively retaining higher-quality positive trajectories while preserving all failure cases; (ii) a scalable and efficient RL infrastructure that supports high-throughput tool call execution and mitigates the high costs of agentic RL rollout, enabling efficient training on limited GPU resources (64 MI300X GPUs); (iii) an agent training recipe that starts with non-reasoning SFT and proceeds through multi-stage RL with concise maximum response lengths per stage and increasing dataset difficulty. To this end, rStar2-Agent boosts a pre-trained 14B model to state-of-the-art levels in only 510 RL steps within one week, achieving 80.6% and 69.8% average pass@1 on AIME24 and AIME25, surpassing DeepSeek-R1 (671B) with shorter responses. Beyond mathematics, rStar2-Agent-14B also demonstrates strong generalization to alignment, scientific reasoning, and agentic tool-use tasks.
 
@@ -147,7 +153,7 @@ The `examples/chat_with_tool_call.py` script supports the following arguments:
 - `--prompt`: Input prompt for the model
 - `--max_tokens`: Maximum number of tokens to generate
 
-## rStar2-Agent-RL-Training
+## rStar2-Agent RL Training
 
 A comprehensive reinforcement learning training framework for the rStar2-Agent, built on [Verl](https://github.com/volcengine/verl) and [Code Judge](https://github.com/0xWJ/code-judge). This framework enables training models after instruction-following supervised fine-tuning (SFT).
 
@@ -212,6 +218,14 @@ augmentation.down_sampling_config.min_zero_reward_trace_num=2        # Minimum n
 augmentation.down_sampling_config.min_non_zero_reward_trace_num=2    # Minimum positive traces to retain
 ```
 
+### Important Note
+
+rStar2-Agent was originally training based on VERL v0.2 with our custom multi-turn tool calling training framework. The current training framework released here has been migrated to VERL v0.5 to ensure compatibility with the latest community standards. While this release framework hasn't been used to train a complete model yet, we have verified that the first 50 training steps show minimal differences between our original and migrated frameworks, maintaining the core functionality of our proven training approach.
+
+Although our original framework includes additional advanced features such as request load balance scheduler, parallel server-side rollout scoring, and enhanced scoring functions for better answer extraction, we chose to migrate to the latest VERL version to maintain community compatibility and facilitate easier customization by users. This approach ensures you can benefit from ongoing VERL improvements and easily integrate with the latest open-source developments. We also consider migrating all features to the current version in the future.
+
+If you encounter any issues during usage or need assistance with the training framework, please contact us.
+
 ### Troubleshooting
 
 #### Common Issues
@@ -233,12 +247,5 @@ augmentation.down_sampling_config.min_non_zero_reward_trace_num=2    # Minimum p
 ## Citation
 If you find this repo useful for your research, please consider citing the paper
 ```
-@misc{guan2025rstar,
-    title={rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking},
-    author={Xinyu Guan and Li Lyna Zhang and Yifei Liu and Ning Shang and Youran Sun and Yi Zhu and Fan Yang and Mao Yang},
-    year={2025},
-    eprint={2501.04519},
-    archivePrefix={arXiv},
-    primaryClass={cs.CL}
-}
+
 ```
