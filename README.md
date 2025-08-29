@@ -4,10 +4,10 @@ rStar2-Agent
 </h1>
 
 <p align="center">
-📃 <a href="https://arxiv.org/abs/2508.20722" target="_blank">[Paper]</a> 
+📃 <a href="https://huggingface.co/papers/2508.20722" target="_blank">[Paper]</a> 
 </p>
 
-Repo for "[rStar2-Agent: Agentic Reasoning Technical Report]()".
+Repo for "[rStar2-Agent: Agentic Reasoning Technical Report](https://huggingface.co/papers/2508.20722)".
 
 Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, Xinyu Guan, Buze Zhang, Bingcheng Dong, Xudong Zhou, Bowen Zhang, Ying Xin, Ziming Miao, Scarlett Li, Fan Yang, Mao Yang†
 
@@ -24,9 +24,9 @@ Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, X
 - **[01/21/2025]** rStar-Math code has been open-sourced. 
 - **[01/09/2025]** rStar-Math paper is released: https://huggingface.co/papers/2501.04519.
 
-Note: Our prior work [Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers](https://huggingface.co/papers/2408.06195) is open-sourced on the `rStar-mutualreasoning` branch.
+Note: Our prior work [Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers](https://huggingface.co/papers/2408.06195) is open-sourced on the [rStar-mutualreasoning b](https://github.com/microsoft/rStar/tree/rStar-mutualreasoning) branch.
 
-Note: Our prior work [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](https://huggingface.co/papers/2501.04519) is open-sourced on the [rStar-math]() branch.
+Note: Our prior work [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](https://huggingface.co/papers/2501.04519) is open-sourced on the [rStar-math](https://github.com/microsoft/rStar/tree/rStar-math) branch.
 
 ## Contents
 - [Introduction](#Introduction)
