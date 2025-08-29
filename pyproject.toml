@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rstar2_agent"
+version = "0.1.0"
+description = "rstar2-agent core training recipe"
+dependencies = [
+    "weave",
+    "sympy",
+    "scipy",
+    "math-verify"
+]
+
+[tool.setuptools]
+packages = ["rstar2_agent", "fused_compute_score"]
