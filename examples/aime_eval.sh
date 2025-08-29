@@ -66,7 +66,6 @@ python3 -m rstar2_agent.main_rstar2_agent \
     trainer.test_freq=5 \
     trainer.total_training_steps=200 \
     trainer.val_only=True \
-    actor_rollout_ref.rollout.val_kwargs.temperature=1.0 \
     actor_rollout_ref.rollout.val_kwargs.n=16 \
     data.train_files="['$HOME/data/rstar2-agent/dapo-math-17k-en/train.parquet']" \
     data.val_files="['$HOME/data/rstar2-agent/aime2024/test.parquet', '$HOME/data/rstar2-agent/aime2025/test.parquet']" \

@@ -4,12 +4,12 @@ rStar2-Agent
 </h1>
 
 <p align="center">
-📃 <a href="https://huggingface.co/papers/2501.04519" target="_blank">[Paper]</a> 
+📃 <a href="https://arxiv.org/abs/2508.20722" target="_blank">[Paper]</a> 
 </p>
 
 Repo for "[rStar2-Agent: Agentic Reasoning Technical Report]()".
 
-Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, Xinyu Guan, Buze Zhang, Bingcheng Dong, Xudong Zhou, Bowen Zhang, Ying Xin, Ziming Miao, Fan Yang, Mao Yang
+Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, Xinyu Guan, Buze Zhang, Bingcheng Dong, Xudong Zhou, Bowen Zhang, Ying Xin, Ziming Miao, Scarlett Li, Fan Yang, Mao Yang†
 
 <p align="center">
     <img src="images/figure-1.png" width="1000">
@@ -264,5 +264,13 @@ If you encounter any issues during usage or need assistance with the training fr
 ## Citation
 If you find this repo useful for your research, please consider citing the paper
 ```
-
+@misc{shang2025rstar2agentagenticreasoningtechnical,
+      title={rStar2-Agent: Agentic Reasoning Technical Report}, 
+      author={Ning Shang and Yifei Liu and Yi Zhu and Li Lyna Zhang and Weijiang Xu and Xinyu Guan and Buze Zhang and Bingcheng Dong and Xudong Zhou and Bowen Zhang and Ying Xin and Ziming Miao and Scarlett Li and Fan Yang and Mao Yang},
+      year={2025},
+      eprint={2508.20722},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2508.20722}, 
+}
 ```
