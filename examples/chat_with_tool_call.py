@@ -10,13 +10,6 @@ vllm serve /path/to/your/model \
     --enable-auto-tool-choice \
     --tool-call-parser hermes
 
-
-vllm serve /scratch/nishang/models/rstar2-agent-rc1 \
-    --host 0.0.0.0 \
-    --port 8000 \
-    --enable-auto-tool-choice \
-    --tool-call-parser hermes
-
 # Check if the server is running well
 
 curl http://localhost:8000/v1/models
