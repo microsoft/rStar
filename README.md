@@ -77,6 +77,7 @@ The rStar2-Agent uses Code Judge as a tool call server to execute model-generate
 #### 1. Start Redis Server
 
 ```bash
+sudo apt-get update -y && sudo apt-get install redis -y
 redis-server --daemonize yes --protected-mode no --bind 0.0.0.0
 ```
 
