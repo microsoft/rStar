@@ -18,9 +18,8 @@ Authors: Ning Shang\*, Yifei Liu\*, Yi Zhu\*, Li Lyna Zhang\*†, Weijiang Xu, X
 </p>
 
 ## News 
-
+- **[10/13/2025]** We’re hiring interns! Topics: agent data synthesis & reinforcement learning. If you’re passionate about building general agents, email us at lzhani@microsoft.com
 - **[07/15/2025]** Our rStar-Coder [paper](https://arxiv.org/abs/2505.21297) and [dataset](https://huggingface.co/datasets/microsoft/rStar-Coder) are released. We introduce a large-scale, verified dataset of 418K competition-level code problems with **test cases** of varying difficulty, enabling small LLMs (1.5B-14B) to achieve frontier-level code reasoning performance.
-- **[02/10/2025]** We are hiring interns! If you are interested in improving LLM reasoning, please send your CV to lzhani@microsoft.com.
 - **[01/21/2025]** rStar-Math code has been open-sourced. 
 - **[01/09/2025]** rStar-Math paper is released: https://huggingface.co/papers/2501.04519.
 
