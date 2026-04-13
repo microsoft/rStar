@@ -9,8 +9,6 @@ import numpy as np
 import ray
 import torch
 from tqdm import tqdm
-
-from verl import DataProto
 from verl.experimental.dataset.sampler import AbstractCurriculumSampler
 from verl.trainer.ppo.core_algos import AdvantageEstimator, agg_loss
 from verl.trainer.ppo.metric_utils import (
@@ -29,6 +27,8 @@ from verl.utils.checkpoint.checkpoint_manager import should_save_ckpt_esi
 from verl.utils.debug import marked_timer
 from verl.utils.metric import reduce_metrics
 from verl.utils.rollout_skip import RolloutSkip
+
+from verl import DataProto
 
 from .down_sample import reject_equal_reward, resample_of_correct
 
@@ -79,7 +79,6 @@ class RStar2AgentRayTrainer(RayPPOTrainer):
         Most logic is same with RayPPOTrainer, mainly add down sample related.
         """
         from omegaconf import OmegaConf
-
         from verl.utils.tracking import Tracking
 
         logger = Tracking(

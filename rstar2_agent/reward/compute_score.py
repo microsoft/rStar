@@ -1,8 +1,9 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from verl.utils.reward_score.prime_math import compute_score as prime_compute_score
 from verl.utils.reward_score.math_verify import compute_score as math_verify_compute_score
+from verl.utils.reward_score.prime_math import compute_score as prime_compute_score
+
 
 def compute_score(model_output: str, ground_truth: str) -> bool:
     try:

@@ -7,8 +7,7 @@ import logging
 import os
 
 import regex as re
-
-from verl.experimental.agent_loop.tool_parser import ToolParser, FunctionCall
+from verl.experimental.agent_loop.tool_parser import FunctionCall, ToolParser
 from verl.utils.rollout_trace import rollout_trace_op
 
 logger = logging.getLogger(__file__)

@@ -14,22 +14,21 @@ vllm serve /path/to/your/model \
 
 curl http://localhost:8000/v1/models
 """
-import aiohttp
 import argparse
 import asyncio
 import json
-import requests
-import yaml
-
 from pathlib import Path
 
+import aiohttp
+import requests
+import yaml
 from transformers import AutoTokenizer, PreTrainedTokenizer
 from verl.tools.schemas import ToolResponse
 
 from rstar2_agent.tools.code_judge_utils import (
-    run_tool_calls_on_server_async,
     generate_tool_call_code,
     generate_tool_call_input,
+    run_tool_calls_on_server_async,
 )
 from rstar2_agent.tools.tool_parser import (
     RStar2AgentHermesToolParser,

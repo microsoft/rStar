@@ -11,7 +11,6 @@ import socket
 import hydra
 import ray
 from omegaconf import OmegaConf
-
 from verl.trainer.constants_ppo import get_ppo_ray_runtime_env
 from verl.trainer.main_ppo import create_rl_dataset, create_rl_sampler
 from verl.trainer.ppo.reward import load_reward_manager
@@ -199,7 +198,6 @@ class TaskRunner:
         from pprint import pprint
 
         from omegaconf import OmegaConf
-
         from verl.utils.fs import copy_to_local
 
         print(f"TaskRunner hostname: {socket.gethostname()}, PID: {os.getpid()}")
@@ -244,7 +242,7 @@ class TaskRunner:
         tool_config_path = config.actor_rollout_ref.rollout.multi_turn.tool_config_path
         tool_list = []
         if tool_config_path is not None:
-            from verl.tools.utils.tool_registry import ToolType, get_tool_class, OpenAIFunctionToolSchema
+            from verl.tools.utils.tool_registry import OpenAIFunctionToolSchema, ToolType
             tools_config = OmegaConf.load(tool_config_path)
             for tool_config in tools_config.tools:
                 tool_type = ToolType(tool_config.config.type)
