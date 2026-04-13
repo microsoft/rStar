@@ -2,12 +2,13 @@
 # Licensed under the MIT license.
 
 import asyncio
-import time
-import uuid
 import collections
-import aiohttp
+import time
 import traceback
-from typing import List, Dict, Any, Callable, Awaitable
+import uuid
+from typing import Any, Awaitable, Callable, Dict, List
+
+import aiohttp
 
 # Define the expected signature for the batch submission function
 # It should be an async callable that takes:

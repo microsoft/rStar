@@ -1,19 +1,18 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+import json
 from functools import partial
 from typing import Any, Optional
 from uuid import uuid4
 
 import aiohttp
-import json
-
-from verl.utils.rollout_trace import rollout_trace_op
 from verl.tools.base_tool import BaseTool
 from verl.tools.schemas import OpenAIFunctionToolSchema, ToolResponse
+from verl.utils.rollout_trace import rollout_trace_op
 
+from .code_judge_utils import generate_tool_call_code, generate_tool_call_input, run_tool_calls_on_server_async
 from .request_processor import RequestProcessor
-from .code_judge_utils import run_tool_calls_on_server_async, generate_tool_call_code, generate_tool_call_input
 
 
 class CodeJudgeTool(BaseTool):

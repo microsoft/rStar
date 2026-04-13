@@ -1,20 +1,19 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
+import asyncio
+import base64
+import re
 from collections import defaultdict
 from typing import Any
 
 import aiohttp
-import asyncio
-import base64
-import re
 import torch
-
-from verl import DataProto
 from verl.workers.reward_manager import register
 from verl.workers.reward_manager.abstract import AbstractRewardManager
 
 from rstar2_agent.tools.code_judge_utils import run_tool_calls_on_server_async
+from verl import DataProto
 
 verify_math_prefix = """
 from fused_compute_score import compute_score

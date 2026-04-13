@@ -2,7 +2,7 @@
 # Licensed under the MIT license.
 
 import torch
-from verl.protocol import DataProto, DataProtoItem
+from verl.protocol import DataProto
 
 
 def filter_by_mask(batch: DataProto, mask: torch.Tensor, num_trainer_replicas: int) -> DataProto:

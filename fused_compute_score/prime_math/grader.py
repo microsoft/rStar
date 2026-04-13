@@ -381,12 +381,12 @@ def format_intervals(prediction):
     return prediction
 
 
-import os
-import signal
-import queue
 import multiprocessing
+import os
+import queue
+import signal
 from functools import wraps
-from typing import Callable, Any
+from typing import Any, Callable
 
 
 def _mp_target_wrapper(target_func: Callable, mp_queue: multiprocessing.Queue, args: tuple, kwargs: dict[str, Any]):

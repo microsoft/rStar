@@ -2,14 +2,15 @@
 # Licensed under the MIT license.
 
 import re
-import numpy as np
-import torch
 from pprint import pprint
 from typing import List
-from transformers import PreTrainedTokenizerFast
 
+import numpy as np
+import torch
+from transformers import PreTrainedTokenizerFast
 from verl.protocol import DataProto
-from .utils import filter_by_mask, decode_prompt_response_str
+
+from .utils import decode_prompt_response_str, filter_by_mask
 
 
 def resample_of_correct(batch: DataProto, tokenizer: PreTrainedTokenizerFast, config: dict, do_sample=True, world_size=None):
